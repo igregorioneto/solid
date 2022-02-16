@@ -1,17 +1,22 @@
 package srp;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 public class Funcionario {
 	
 	private Integer id;
 	private String nome;
 	private Double salario;
-	private Connection connection;
+	private Cargo cargo;
 	
+	public Funcionario() {}
+	
+	public Funcionario(Integer id, String nome, Double salario, Cargo cargo) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.salario = salario;
+		this.cargo = cargo;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -27,24 +32,30 @@ public class Funcionario {
 	public void setSalario(Double salario) {
 		this.salario = salario;
 	}
+	
+	public Integer getId() {
+		return id;
+	}
 
-	public Double calculaSalario() {
-		return this.salario - (this.salario * 0.225);
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Cargo getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+
+	public double calculaSalario() {
+		return cargo.getRegra().calcula(this);
 	}
 	
-	public void salva() throws SQLException {
-		this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa?useSSL=false", "root", ""); 
-		Statement stmt = this.connection.createStatement();
-		String sql = "insert into funcionario (id, nome, salario) values (" + this.id + "," +
-				this.nome + "," + this.salario + ")";
-		int rs = stmt.executeUpdate(sql);
-		
-		if (rs == 1){
-			System.out.println("Funcionario inserido com sucesso.");
-		}else if (rs == 0){
-			System.out.println("Nenhum funcionario inserido.");
-		}
+	@Override
+	public String toString() {
+		return "Funcionario [id=" + id + ", nome=" + nome + ", salario=" + salario + ", cargo=" + cargo + "]";
 	}
-	
 
 }
