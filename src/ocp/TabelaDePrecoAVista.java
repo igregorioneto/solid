@@ -1,7 +1,8 @@
 package ocp;
 
-public class TabelaDePrecoAVista {
+public class TabelaDePrecoAVista implements TabelaDePreco {
 	
+	@Override
 	public double calculaDesconto(double valor) {
 		if(valor > 100.0) {
 			return 0.05;

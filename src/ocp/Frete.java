@@ -1,7 +1,8 @@
 package ocp;
 
-public class Frete {
+public class Frete implements ServicoDeFrete {
 	
+	@Override
 	public double calculaFrete(String estado) {
 		if("SAO PAULO".equals(estado.toUpperCase())) {
 			return 7.5;
